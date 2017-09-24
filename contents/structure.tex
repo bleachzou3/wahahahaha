@@ -51,7 +51,31 @@ $\alpha,\beta$是权重系数，各自控制蛇模型的伸缩和弯曲。$\alph
 	E_{elastic} = \frac{1}{2}\int\beta(s)|v^{''}(s)|^{2}ds
 \end{align}
 
-通常来说，$\alpha(s)$和$\beta(s)$在蛇模型中对每一点来说是一样的，就是可以被当作常量。
+通常来说，$\alpha(s)$和$\beta(s)$在蛇模型中对每一点来说是一样的，就是可以被当作常量。可以用\eqref{eq:base_snake_calculative_internal_elastic_representation}
+和\eqref{eq:base_snake_calculative_internal_bending_representation}的最小值解释蛇模型的形变趋势。
+
+(1)伸缩力量:
+
+公式\eqref{eq:base_snake_calculative_internal_elastic_representation}达到最小值，当$v^{'}(s)=0$或者$v(s)=const$，也就是蛇模型的每一点在同一位置。换句话
+说，换句话说伸缩力量使得蛇模型变成一个点。
+
+(2)弯曲力量:
+
+公式\eqref{eq:base_snake_calculative_internal_bending_representation}达到最小值，当$v^{''}=0$，这也意味着：
+\begin{align}\label{eq:simple_vs_function}
+	v(s) = cs
+\end{align}
+
+公式\eqref{eq:simple_vs_function}是线性等式。从几何上来说，$v^{''}(s)=0$代表着蛇模型的曲率。所以蛇模型在曲率值高的地方尽量演变成一条直线或者磨平尖角。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\linewidth]{snakesSmoothOverSharpCorner.png}
+	\caption{蛇模型尖角处平滑}\label{fig:snakesSmoothOverSharpCorner}
+\end{figure}
+
+在图\ref{fig:snakesSmoothOverSharpCorner}中，点$C$的曲率比$C^{'}$的高。我们假设$AC^{'}B$的半径和$ACB$的半径一样。因为$AC+BC$的弧长比$AC^{'}B$长，
+所以点$C$的曲率比点$C^{'}$的曲率高。
 
 
 snake方法的原理和实现
