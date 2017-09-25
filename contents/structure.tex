@@ -93,8 +93,53 @@ E_{image} = -|\nabla G_{\sigma}(x,y) *  \nabla I(x,y)|^{2}
 高斯函数的一个效果是边界被模糊或扩张，这导致蛇模型局部最小值较差的收敛性，好处是我们能从较远的地方使蛇模型靠近最小值。较大的标准差会使捕获空间比较大。在\cite{kass1988snakes}中，
 \eqref{eq:base_snake_image_energy_grey_level_representation}叫作边缘函数，而\eqref{eq:base_snake_image_energy_grey_level_guassian_representation}被叫作尺度空间。
 
+\subsubsection{约束能量}
+约束能量$E_{con}(v(s))$是一种外部力量，主要是一种相互作用的能量。这种力量是基于高阶约束（这种高阶约束和全局策略相关），例如和图像中其他物体的关系，这种强制力量会迫使蛇模型朝向或者原理特殊区域。它提供了一种外部
+约束的度量方式，无论是形状信息还是使用通过交互提供的能量值。
 
+
+\subsection{snake模型数值解法}
+\subsubsection{有限差分法}
 snake方法的原理和实现
+蛇模型被离散化成N个不同的点，蛇模型的能量\eqref{eq:base_snake_calculative_representation}N个点能量的累积和。
+\begin{align}\label{eq:snake_energy_discrete_representation}
+E_{snake}^{*} = \sum_{i=1}^{N}E_{int}(i)+E_{ext}(i)
+\end{align}
+
+在公式\eqref{eq:base_snake_parameter_representation},参数用$i*h$代替，这里h是固定的步长。
+\begin{align}\label{eq:snake_parameter_discrete_representation}
+v(s)=v(i)=(x_{i},y_{i})=(x(i*h),y(i*h)) (i=1 \ldots n)
+\end{align}
+
+内部能量范围内有限差分的近似导数
+\begin{align}\label{eq:simple_parameter_derivative_first_order}
+\frac{dv(s)}{ds} = \frac{|v_{i}-v_{i-1}|^{2}}{h^{2}}
+\end{align}
+
+\begin{align}\label{eq:simple_parameter_derivative_second_order}
+\frac{d^{2}v(s)}{ds^{2}} = \frac{|v_{i+1}-2v_{i}+v_{i-1}|^{2}}{h^{4}}
+\end{align}
+
+让$f_{x}(i)=\frac{\partial E_{ext}}{\partial x_{i}}$和$f_{y}(i)=\frac{\partial
+E_{ext}}{\partial
+y_{i}}$。我们最小化公式\eqref{eq:snake_energy_discrete_representation}等于解下面的欧拉等式：
+\begin{align}\label{eq:solve_euler_equations}
+\begin{split}
+\alpha_{i}[v_{i}-v_{i-1}] - \alpha_{i+1}[v_{i+1} -v_{i}]
++\beta_{i-1}[v_{i-2}-2v_{i-1}+v_{i}]\\
+-2\beta_{i}[v_{i-1}-2v_{i}+v_{i+1}]+\beta_{i+1}[v_{i}-2v_{i+1}+v_{i+2}]+(f_{x}(i),f_{y}(i))=0
+\end{split}
+\end{align}
+解决这个等式可以把矩阵运用到\eqref{eq:snake_energy_discrete_representation},这个等式现在是由N个形如\eqref{eq:solve_euler_equations}的欧拉等式组成。
+\begin{align}\label{eq:snake_discrete_matrix_form}
+\begin{split}
+AX+f_{x}(X,Y)=0\\
+AY+f_{y}(X,Y)=0
+\end{split}
+\end{align}
+为了解决公式\eqref{eq:snake_discrete_matrix_form}，等式的右边设置成步长
+
+解决这个等式可以使用矩阵
 
 学位论文基本结构包括前置部份、主体部份和结尾部份\footnote{测试脚注另起一章编号的变化}。
 \section{前置部分包括}
