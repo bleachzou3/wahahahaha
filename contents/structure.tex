@@ -77,6 +77,22 @@ $\alpha,\beta$是权重系数，各自控制蛇模型的伸缩和弯曲。$\alph
 在图\ref{fig:snakesSmoothOverSharpCorner}中，点$C$的曲率比$C^{'}$的高。我们假设$AC^{'}B$的半径和$ACB$的半径一样。因为$AC+BC$的弧长比$AC^{'}B$长，
 所以点$C$的曲率比点$C^{'}$的曲率高。
 
+\subsubsection{图像能量}
+图像能量$E_{image}(v(s))$是从图像推导出来的信息，它对感兴趣的特征区域会采用比较小的值，例如边界。觉个例子，给出一张灰度图像I(x,y)，蛇模型是靠近物体边界的，因为在边界处有较大的
+梯度值，以及较小的图像能量。
+\begin{align}\label{eq:base_snake_image_energy_grey_level_representation}
+	E_{image} = -|\nabla I(x,y)|^{2}
+\end{align}
+
+但是更常见的是图像能量被定义为另外一种情况：
+\begin{align}\label{eq:base_snake_image_energy_grey_level_guassian_representation}
+E_{image} = -|\nabla G_{\sigma}(x,y) *  \nabla I(x,y)|^{2}
+\end{align}
+其中$G_{\sigma}(x,y)$标准差是$\sigma$的二维高斯函数，符号$\nabla$是梯度算子
+
+高斯函数的一个效果是边界被模糊或扩张，这导致蛇模型局部最小值较差的收敛性，好处是我们能从较远的地方使蛇模型靠近最小值。较大的标准差会使捕获空间比较大。在\cite{kass1988snakes}中，
+\eqref{eq:base_snake_image_energy_grey_level_representation}叫作边缘函数，而\eqref{eq:base_snake_image_energy_grey_level_guassian_representation}被叫作尺度空间。
+
 
 snake方法的原理和实现
 
