@@ -137,9 +137,21 @@ AX+f_{x}(X,Y)=0\\
 AY+f_{y}(X,Y)=0
 \end{split}
 \end{align}
-为了解决公式\eqref{eq:snake_discrete_matrix_form}，等式的右边设置成步长
+为了解决公式\eqref{eq:snake_discrete_matrix_form}，等式的右边设置成步长和左边函数导数的积
+\begin{align}\label{eq:snake_discrete_matrix_form_solve}
+\begin{split}
+AX_{t}+f_{x}(X_{t-1},Y_{t-1})=-\gamma(X_{t}-X_{t-1})   \\
+AY_{t}+f_{y}(X_{t-1},Y_{t-1})=-\gamma(Y_{t}-Y_{t-1})
+\end{split}
+\end{align}
+等式\eqref{eq:snake_discrete_matrix_form}进行矩阵的迭代转置
+\begin{align}\label{eq:snake_discrete_matrix_form_solve}
+\begin{split}
+X_{t}=(A+\Gamma I)^{-1}(\gamma X_{t-1} - f_{x}(X_{t-1},Y_{t-1}))\\
+Y_{t}=(A+\gamma I)^{-1}(\gamma Y_{t-1} - f_{y}(X_{t-1},Y_{t-1}))
+\end{split}
+\end{align}
 
-解决这个等式可以使用矩阵
 
 学位论文基本结构包括前置部份、主体部份和结尾部份\footnote{测试脚注另起一章编号的变化}。
 \section{前置部分包括}
