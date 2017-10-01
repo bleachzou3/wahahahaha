@@ -52,7 +52,46 @@ Rectangular核函数
 \right.
 \end{equation}
 
+\subsection{核函数密度估计}
+核函数密度估计是一种估计随机变量密度函数的非参数方式。它经常被称作Parzen窗口技术。给定一个函数，步长h,核密度估计对一个多维集合点来说是
+\begin{align}\label{eq:parzen_window}
+	\hat{f}(x) = \frac{1}{nh^d}\sum_{i=1}^{n}K(\frac{x-x_{i}}{h})
+\end{align}
 
+\subsection{均值偏移的梯度上升}
+均值偏移是基于密度轮廓的梯度上升。梯度上升的通常形式
+\begin{align}\label{eq:gradient_ascent}
+	x_{1} = x_{0} + \eta f^{'}(x_{0})
+\end{align}
+我们把梯度上升运用到\eqref{eq:parzen_window}得到梯度
+\begin{align}\label{eq:eq:parzen_window_gradient}
+	\nabla \hat{f}(x)= \frac{1}{h^{d+1}}\sum K^{'}(\frac{x-x_{i}}{h})
+\end{align}
+我们把梯度设为0，我们得到
+\begin{align}\label{eq:parzen_window_gradient}
+\sum_{i=1}^{n}K^{'}(\frac{x-x_{i}}{h})\vec{x} = \sum_{i=1}^{n}K^{'}(\frac{x-x_{i}}{h})\vec{x_{i}}
+\end{align}
+最后我们得到，我们得到
+\begin{align}\label{eq:original_mean_shift_vector}
+\vec{x} =
+\frac{\sum_{i=1}^{n}K^{'}(\frac{x-x_{i}}{h})\vec{x_{i}}}{\sum_{i=1}^{n}K^{'}(\frac{x-x_{i}}{h})}
+\end{align}
+
+\subsection{偏移}
+如前所述，均值偏移把这些点组成的特征空间当做概率密度函数。特征空间中密集的区域对应于最大值，或者就是概率分布的模式。对于每一个点，在局部估计密度运用梯度上升，直到收敛。通过梯度上升得到的
+固定的点代表概率密度函数模式。所有属于一个固定点的点组成一个簇，我们假设$g(x) = -K^{'}(x) $,我们有
+\begin{align}\label{eq:mean_shift_mx}
+m(x) =
+\frac{\sum_{i=1}^{n}g(\frac{x-x_{i}}{h})x_{i}}{\sum_{i=1}^{n}g(\frac{x-x_{i}}{h})}
+- x
+\end{align}
+
+我们把数量$m(x)$叫做均值偏移。把前面迭代过程结合公司描述一下
+\begin{enumerate}
+  \item 计算均值偏移向量$m(x_{i}^{t}) $
+  \item 沿着$m(x_{i}^t)$移动密度估计窗口
+  \item 重复这个过程直到收敛
+\end{enumerate}
 \section{snake方法}
 \subsection{snake模型}
 1987年Kass等人提出动态轮廓模型\cite{kass1988snakes}，这个模型的提出主要是为了找数字图像中的
