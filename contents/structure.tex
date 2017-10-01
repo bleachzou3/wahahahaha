@@ -4,8 +4,9 @@
 \section{水平集方法}
 水平集方法的原理和实现
 \section{mean-shift方法}
-Mean
-Shift是Fukunage提出的一种方法\cite{Fukunaga1975The}，由Yizong等人改进\cite{Cheng1995Mean}。
+Mean Shift是Fukunage提出的一种方法\cite{Cheng1995Mean}，由Yizong等人改进\cite{Cheng1995Mean}。
+
+
 
 均值偏移把特征空间当做经验概率密度函数。如果输入是点的集合，均值偏移考虑这些点是从潜在的概率密度函数中提取出来的。如果稠密的区域出现在特征空间中，它们就是潜在的概率密度函数的模式。我们使用均值
 偏移识别出和固定模式相关联的簇。对于每一个数据点，均值偏移以这个点为中心定义了一个窗口，计算这个窗口内数据点的平均值。然后移动窗口的中心到平均值处，重复整个算法过程直到收敛。在每一次迭代后，我们
@@ -18,6 +19,38 @@ Shift是Fukunage提出的一种方法\cite{Fukunaga1975The}，由Yizong等人改
   \item 移动窗口，重复这个过程直到收敛
 \end{enumerate}
 \subsection{核函数}
+一个函数是核函数，需要满足如下两个要求
+
+\begin{enumerate}
+  \item $\int_{R^d} \phi (x) dx = 1$
+  \item $\phi (x) \geq 0 $
+\end{enumerate}
+举几个常见核函数的例子
+
+Rectangular核函数
+\begin{equation}\label{eq:kernel_rectangular}
+\phi (x)=\left\{
+\begin{aligned}
+ 1  && {a \leq x \leq b} \\
+ 0  && {else}
+\end{aligned}
+\right.
+\end{equation}
+
+最常见的是高斯核函数
+\begin{align}\label{eq:kernel_guassian}
+	\phi (x) = e^{-\frac{x^{2}}{2\sigma^2}}
+\end{align}
+
+还有Epanechnikov核函数
+\begin{equation}\label{eq:kernel_rectangular}
+\phi (x)=\left\{
+\begin{aligned}
+ \frac{3}{4}(1-x^{2})  && {if \left| x \right| \leq 1} \\
+ 0  && {else}
+\end{aligned}
+\right.
+\end{equation}
 
 
 \section{snake方法}
